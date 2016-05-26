@@ -1,0 +1,240 @@
+﻿@*@model IEnumerable<Cars_DTView.Models.Car>*@
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<form id="form" method="post" action="@Url.Action("Index")">
+
+    @Html.DropDownList("year", null, new {@id = "yearList"})
+
+    
+    @Html.DropDownList("make", null, new {@id = "makeList"})
+    
+    @Html.DropDownList("model", null, new {@id = "modelList"})
+     
+   
+    @Html.DropDownList("trim", null, new {@id = "trimList"})
+    
+    <br/> <br/>
+    <button id="reset" type="submit">Reset</button>
+</form>
+<br/>
+@*<div id="ctable">
+    @Html.Action("Table")
+</div>*@
+<table id="carTable" class="display" cellspacing="0">
+    <thead>
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Make
+        </th>
+        <th>
+            Model
+        </th>
+        <th>
+            Trim
+        </th>
+        <th>
+            Year
+        </th>
+        <th>
+            Body Style
+        </th>
+
+        <th>
+            EngineNumCyl
+        </th>
+        <th>
+            EnginePowerPS
+        </th>
+        <th>
+            Drive Type
+        </th>
+
+        <th>
+            Seats
+        </th>
+
+        <th>
+            Link
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+        @*@foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.make)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.model_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.model_trim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.model_year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.body_style)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.engine_num_cyl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.engine_power_ps)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.drive_type)
+                </td>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => item.seats)
+                </td>
+               
+                <td>
+
+                    @Html.ActionLink("Details", "Details", new { id = item.id })
+
+                </td>
+            </tr>
+        }*@
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        var year, make, model, trim;
+        $('#yearList').change(function () {
+            year = $('#yearList').val();
+            console.log(year);
+            $('#makeList').empty();
+            $.getJSON('/Cars1/GetMakes/', {year}, function (data) {
+                console.log(data);
+                $.each(data, function (i, obj) {
+                    console.log(obj['Text']);
+                    $('#makeList').append(
+                         $('<option></option>')
+                                .text(obj["Text"])
+                                );
+                });
+            });
+
+            $('#modelList').empty();
+            $('#trimList').empty();
+            $('#carTable').dataTable().api().draw();
+            
+        });
+        $('#makeList').change(function () {
+            make = $('#makeList').val();
+            console.log(make);
+            $('#modelList').empty();
+            $.getJSON('/Cars1/GetModels/', { year, make }, function (data) {
+                console.log(data);
+                $.each(data, function (i, obj) {
+                    console.log(obj['Text']);
+                    $('#modelList').append(
+                         $('<option></option>')
+                                .text(obj["Text"])
+                                );
+                });
+            });
+            $('#trimList').empty();
+            $('#carTable').dataTable().api().draw();
+        });
+        $('#modelList').change(function () {
+            model = $('#modelList').val();
+            console.log(model);
+            $('#trimList').empty();
+            $.getJSON('/Cars1/GetTrims/', { year, make, model }, function (data) {
+                console.log(data);
+                $.each(data, function (i, obj) {
+                    console.log(obj['Text']);
+                    $('#trimList').append(
+                         $('<option></option>')
+                                .text(obj["Text"])
+                                );
+                });
+            });
+            $('#carTable').dataTable().api().draw();
+        });
+        $('#trimList').change(function () {
+            trim = $('#trimList').val();
+            console.log(trim);
+            $('#carTable').dataTable().api().draw();
+        });
+        $('body').on('click', '#reset', function() {
+            $('#yearList').empty();
+            $('#makeList').empty();
+            $('#modelList').empty();
+            $('#trimList').empty();
+        });
+            //$('#ctable').load('/Cars1/Table/'+ year);
+            //$.ajax({
+            //    url: "/Cars1/GetMakes",
+            //    type: "Post",
+            //    data: function(d) {
+            //        d.year = $('#yearList').val();
+
+            //    }
+            //}).done(function() {
+            //    //$.ajax({
+            //    //    url: "/Cars1/Table",
+            //    //    type: "Post",
+            //    //    data: function(d) {
+            //    //        d.year = $('#yearList').val();
+
+            //    //    }
+            //    //}).done(function() {
+
+            //    //});
+
+            //    $('#ctable').load('/Cars1/Table/'+year );
+            //    // $(this).addClass("done");
+            //});
+        
+        //$('#carTable').DataTable();
+
+        $('#carTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "/Cars1/GetCars",
+                "type": "Post",
+                "data": function (d) {
+                    d.year = $('#yearList').val();
+                    d.make = $('#makeList').val();
+                    d.model = $('#modelList').val();
+                    d.trim = $('#trimList').val();
+                }
+            },
+            "columns": [
+                { "data": "id", "visible": false },
+                { "data": "make" },
+                { "data": "model_name" },
+                {
+                    "data": "model_trim"
+                    
+                },
+                {
+                    "data": "model_year",
+                   
+                },
+                { "data": "body_style" },
+                { "data": "engine_num_cyl" },
+                { "data": "engine_power_ps" },
+                { "data": "drive_type" },
+                { "data": "seats" },
+                { "data": "link" }
+
+            ]
+        });
+    </script>
+}

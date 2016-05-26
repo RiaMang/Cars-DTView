@@ -1,0 +1,122 @@
+﻿@model Cars_DTView.Models.Car
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Car</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.make)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.make)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.model_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.model_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.model_trim)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.model_trim)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.model_year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.model_year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.body_style)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.body_style)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.engine_cc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.engine_cc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.engine_num_cyl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.engine_num_cyl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.engine_power_ps)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.engine_power_ps)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.drive_type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.drive_type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.transmission_type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.transmission_type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.seats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.seats)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.doors)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.doors)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.weight_kg)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.weight_kg)
+        </dd>
+
+    </dl>
+</div>
+<p>
+   
+    @Html.ActionLink("Back to List", "Index")
+</p>

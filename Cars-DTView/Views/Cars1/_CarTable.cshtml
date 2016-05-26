@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Cars_DTView.Models.Car>
+
+<table id="carTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.make)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.model_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.model_trim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.model_year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.body_style)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.engine_cc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.engine_num_cyl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.engine_power_ps)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.drive_type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.transmission_type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.seats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.doors)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.weight_kg)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.make)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.model_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.model_trim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.model_year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.body_style)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.engine_cc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.engine_num_cyl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.engine_power_ps)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.drive_type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.transmission_type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.seats)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.doors)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.weight_kg)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Details", "Details", new { id = item.id })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

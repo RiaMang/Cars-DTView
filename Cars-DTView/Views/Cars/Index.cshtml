@@ -1,0 +1,150 @@
+﻿@model IEnumerable<Cars_DTView.Models.Car>
+<style>
+    tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+
+    tfoot {
+    display: table-header-group;
+    }
+</style>
+<div class="container-fluid" id="main-page">
+    <section class="bg-primary" id="about">
+        <form action="@Url.Action("Index","Cars")">
+            @Html.DropDownList("year")
+            <button type="submit" class="btn btn-default">Select</button>
+        </form>
+        <br />
+        <table id="carTable">
+            <thead>
+                <tr>
+                    <th>
+                        Make
+                    </th>
+                    <th>
+                        Model
+                    </th>
+                    <th>
+                        Trim
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        Body Style
+                    </th>
+                    <th>
+                        Engine CC
+                    </th>
+                    <th>
+                        Cylinders
+                    </th>
+                    <th>
+                        Power
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>
+                        Make
+                    </th>
+                    <th>
+                        Model
+                    </th>
+                    <th>
+                        Trim
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        Body Style
+                    </th>
+                    <th>
+                        Engine CC
+                    </th>
+                    <th>
+                        Cylinders
+                    </th>
+                    <th>
+                        Power
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </tfoot>
+
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.make)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.model_name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.model_trim)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.model_year)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.body_style)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.engine_cc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.engine_num_cyl)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.engine_power_ps)
+                        </td>
+                        <td>
+
+                            @Html.ActionLink("Details", "Details", new { id = item.id })
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+</div>
+    @section scripts{
+        <script>
+            $(function () {
+
+                // Setup - add a text input to each footer cell
+                $('#carTable tfoot th').each(function () {
+                    var title = $('#carTable thead th').eq($(this).index()).text();
+                    $(this).html('<input type="text" placeholder="' + title + '" />');
+                });
+
+                // DataTable
+                var table = $('#carTable').DataTable();
+
+                // Apply the search
+                table.columns().every(function () {
+                    var that = this;
+
+                    $('input', this.footer()).on('keyup change', function () {
+                        that
+                            .search(this.value)
+                            .draw();
+                    });
+                });
+            });
+
+
+        </script>
+    }

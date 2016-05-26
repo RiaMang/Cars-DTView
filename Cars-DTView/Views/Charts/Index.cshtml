@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="row">
+    <div id="MyChart" style="height: 250px;" class="col-md-6">
+
+    </div>
+    <div class="col-md-6">
+        <div id="barChart" style="height: 250px;" class="col-md-6">
+
+        </div>
+</div>
+
+@section scripts{
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        $.post('@Url.Action("GetChart","Charts")').then(function (response) {
+            new Morris.Donut({
+                element: 'MyChart',
+                data: response,
+                resize: true
+            });
+        });
+
+        Morris.Bar({
+            element: 'barChart',
+            data: [
+            { y: 'Person A', a: 10, b: 15 },
+            { y: 'Person B', a: 15, b: 12 },
+            { y: 'Person C', a: 12, b: 20 },
+            { y: 'Person D', a: 20, b: 15 }
+            ],
+            xkey: 'y',
+            ykeys: ['a','b'],
+            labels: ['Calls','texts'],
+            hideHover: 'always',
+            barColors: function (row, series, type) {
+                console.log("--> " + row, series, type);
+                //if (row.label == "Person A") return "#AD1D28";
+                //else if (row.label == "Person B") return "#DEBB27";
+                //else if (row.label == "Person C") return "#fec04c";
+                //else if (row.label == "Person D") return "#1AB244";
+                if(series.index == 0)
+                    return "#AD1D28";
+                else if(series.index == 1)
+                    return "#1AB244";
+            }
+        });
+    });
+    </script>
+    }

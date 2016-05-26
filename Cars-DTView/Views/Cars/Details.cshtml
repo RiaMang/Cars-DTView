@@ -1,0 +1,78 @@
+﻿@model Cars_DTView.Models.CarViewModel
+
+<div class="container-fluid">
+    <section class="bg-primary" id="about">
+        <h4>@Model.Car.make @Model.Car.model_name @Model.Car.model_trim - @Model.Car.model_year</h4>
+
+        <div>
+            <img class="img-responsive" src="@Model.Image" />
+            <hr />
+
+            @{ int num = 2;}
+            <div id="tabs">
+                <ul>
+                    <li><a href="#tabs-1"> Details</a></li>
+                    @for (var i = 1; i <= (int)Model.Recalls.Count; i++)
+                    {
+                        <li><a href="#tabs-@(i+1)">Recall - @i</a></li>
+                    }
+
+                </ul>
+                <div id="tabs-1">
+                    <strong>Car Details</strong>
+                    Year: @Model.Car.model_year <br />
+                    Make: @Model.Car.make <br />
+                    Model: @Model.Car.model_name <br />
+                    Trim: @Model.Car.model_trim <br />
+                    Body Style: @Model.Car.body_style <br />
+                    Engine CC: @Model.Car.engine_cc <br />
+                    Engine Power: @Model.Car.engine_power_ps <br />
+                    Cylinders: @Model.Car.engine_num_cyl <br />
+                    Recalls: @Model.Recalls.Count <br />
+
+
+
+                </div>
+
+                @foreach (var result in @Model.Recalls.Results)
+                {
+                    <div id="tabs-@num">
+                        <strong>Manufacturer: </strong>@result.Manufacturer <br />
+                        <strong>NHTSACampaignNumber: </strong>@result.NHTSACampaignNumber <br />
+                        <strong>NHTSAActionNumber: </strong>@result.NHTSAActionNumber <br />
+                        <strong>ReportReceivedDate: </strong>@result.ReportReceivedDate  <br />
+                        <strong>Component: </strong>@result.Component <br />
+                        <strong>Summary: </strong>@result.Summary <br />
+                        <strong>Consequence: </strong>@result.Conequence <br />
+                        <strong>Remedy: </strong>@result.Remedy <br />
+
+
+                        @{ num++;}
+                    </div>
+                            }
+
+
+                <hr />
+                <p></p>
+
+            </div>
+            <p>
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+        </div>
+    </section>
+</div>
+    
+
+
+    @section scripts
+    {
+      
+<script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+        <script>
+                $(function () {
+                    $("#tabs").tabs();
+                });
+        </script>
+    }
+
